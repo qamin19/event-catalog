@@ -1,4 +1,4 @@
 {
-  "storage": "memory",
+  "storage": "json",
   "filePath": "data/events.json"
 }
