@@ -1,3 +1,5 @@
+import '../exceptions/domain_exception.dart';
+
 /// Сутність "Подія" — центральний об'єкт предметної області.
 /// Не залежить від жодного іншого шару.
 class EventItem {
@@ -18,7 +20,11 @@ class EventItem {
   });
 
   /// Повертає копію події зі скасованим статусом.
+  /// Бізнес-правило: вже скасовану подію скасувати не можна.
   EventItem cancel() {
+    if (isCancelled) {
+      throw const DomainException('Подію вже скасовано');
+    }
     return EventItem(
       id: id,
       title: title,
