@@ -32,7 +32,12 @@ Map<String, dynamic> _loadConfig(String path) {
   if (!file.existsSync()) {
     return {'storage': 'memory'};
   }
-  return jsonDecode(file.readAsStringSync()) as Map<String, dynamic>;
+  try {
+    return jsonDecode(file.readAsStringSync()) as Map<String, dynamic>;
+  } on FormatException {
+    print('Увага: config.json пошкоджено, використано сховище в пам\'яті.');
+    return {'storage': 'memory'};
+  }
 }
 
 EventRepository _createRepository(Map<String, dynamic> config) {
